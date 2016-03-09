@@ -9,12 +9,6 @@ import sim.SimState;
 
 public class CWState extends SimState {
 	
-	private double lambda = 1.5;
-	private double maxSimTime = 15;
-	
-	private int fastWashers = 0;
-	private int slowWashers = 0;
-	private int maxQueue = 0;
 
 	private int queueSize = 0;
 	private int rejectedCars = 0;
@@ -29,25 +23,49 @@ public class CWState extends SimState {
 	
 	public ArrayList<double[]> carWashQueue = new ArrayList<>();
 	
-	private long seed = 1234;
-	private double lowerFast = 2.8;
-	private double upperFast = 5.6;
-	private double lowerSlow = 4.5;
-	private double upperSlow = 6.7;
+	private long seed;
+	private double lowerFast;
+	private double upperFast;
+	private double lowerSlow;
+	private double upperSlow;
 	
 	private UniformRandomStream fastRandom;
 	private UniformRandomStream slowRandom;
 	private ExponentialRandomStream expoRandom;
 
+    private int fastWashers;
+    private int slowWashers;
+    private int maxQueue;
 
-	public CWState(int fastWashers, int slowWashers , int maxQueueSize){
-		this.fastWashers = fastWashers;
-		this.slowWashers = slowWashers;
-		this.maxQueue = maxQueueSize;
-		this.fastRandom = new UniformRandomStream(lowerFast,upperFast,seed);
-		this.slowRandom = new UniformRandomStream(lowerSlow,upperSlow,seed);
-		this.expoRandom = new ExponentialRandomStream(lambda,seed);
-	}
+    private double lambda = 1.5;
+    private double maxSimTime = 15;
+
+    public CWState(long seed,
+                   double lowerFast,
+                   double upperFast,
+                   double lowerSlow,
+                   double upperSlow,
+                   int fastWashers,
+                   int slowWashers,
+                   int maxQueue,
+                   double lambda,
+                   double maxSimTime) {
+
+        this.seed = seed;
+        this.lowerFast = lowerFast;
+        this.upperFast = upperFast;
+        this.lowerSlow = lowerSlow;
+        this.upperSlow = upperSlow;
+        this.fastWashers = fastWashers;
+        this.slowWashers = slowWashers;
+        this.maxQueue = maxQueue;
+        this.lambda = lambda;
+        this.maxSimTime = maxSimTime;
+
+        this.fastRandom = new UniformRandomStream(lowerFast, upperFast, seed);
+        this.slowRandom = new UniformRandomStream(lowerSlow,upperSlow,seed);
+        this.expoRandom = new ExponentialRandomStream(lambda,seed);
+    }
 
 	public void sort(){ //Kr�vs ifall en carId I k�n avslutas f�re ett carId tidigare i k�n. �ndrar positionen s� den blir korrekt
 		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
@@ -56,6 +74,7 @@ public class CWState extends SimState {
 	public double getMaxTime(){
 		return maxSimTime;
 	}
+
 	public double getIdleTime(){
 		return idleTime;
 	}
@@ -162,6 +181,7 @@ public class CWState extends SimState {
 	}
 	
 	public void setQueueTime(double time){ //R�knar ut queueTime
+
 		if(lastQueueTime == 0){
 			lastQueueTime = time;
 		}
@@ -172,7 +192,6 @@ public class CWState extends SimState {
 	}
 	
 	public void setCarId(int x){
-
 		carId = "" + x;
 	}
 	

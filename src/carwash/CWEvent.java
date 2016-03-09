@@ -5,24 +5,22 @@ import sim.SimEvent;
 
 
 public class CWEvent implements SimEvent {
-	
-	CWState state;
-	private double time = 0;
-	private int carId = 0;
-	private int action = 1; //Default ARRIVE
-
 	private int START = 0;
 	private int ARRIVE = 1;
 	private int LEAVE = 2;
 	private int STOP = 3;
-	
+
+	CWState state;
+	private double time = 0;
+	private int carId = 0;
+	private int action = ARRIVE;
+
 	private boolean stopping = false;
 	private boolean removing = false;
 	
-	//Anv�nds i LEAVE() kollar om bilen �kte fr�n snabb eller l�ngsam tvät
-
 	private boolean fast = false;
 	private boolean slow = false;
+
 
 	public CWEvent(double time, int carId, CWState state){
 		this.time = time;
