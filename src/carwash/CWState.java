@@ -130,7 +130,10 @@ public class CWState extends SimState {
 
 
 	public double getMeanQueue(){
-		//TODO
+		//TODO divide by the number of cars that actually get washed during simulation time (19 in current testcase)
+
+        // Test case on page 5 in lab spec -> does not work
+
 		return getQueueTime()/19; //Var i helvete kommer 19 ifr�n? Har h�kan gjort fel?
 	}
 	
