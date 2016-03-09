@@ -71,8 +71,6 @@ public class CWEvent implements SimEvent {
 			state.setEvent(action);
 			state.changeFastWashers(-1);
 			time += state.getFastRandom();
-			//TODO add as a list
-			// [time, 1.0]
 			saveLeaveTime[0] = time;
 			saveLeaveTime[1] = 1;
 			state.carWashQueue.add(saveLeaveTime);

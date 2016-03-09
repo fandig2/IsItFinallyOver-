@@ -28,7 +28,7 @@ public class CWState extends SimState {
 	private double queueTime = 0;
 	private double lastQueueTime = 0;
 	
-	public ArrayList<double[]> carWashQueue = new ArrayList<double[]>();
+	public ArrayList<double[]> carWashQueue = new ArrayList<>();
 	
 	private long seed = 1234;
 	private double lowerFast = 2.8;
@@ -50,7 +50,6 @@ public class CWState extends SimState {
 		this.expoRandom = new ExponentialRandomStream(lambda,seed);
 	}
 
-	//TODO can we refactor this?
 	public void sort(){ //Kr�vs ifall en carId I k�n avslutas f�re ett carId tidigare i k�n. �ndrar positionen s� den blir korrekt
 		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
 	}
