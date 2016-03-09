@@ -1,7 +1,6 @@
 package carwash;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import random.ExponentialRandomStream;
 import random.UniformRandomStream;
@@ -11,7 +10,7 @@ import sim.SimState;
 public class CWState extends SimState {
 	
 	private double lambda = 1.5;
-	private double maxSimTime = 15; //Best�m n�r programmet ska avsluta
+	private double maxSimTime = 15;
 	
 	private int fastWashers = 0;
 	private int slowWashers = 0;
@@ -21,7 +20,7 @@ public class CWState extends SimState {
 	private int rejectedCars = 0;
 	private double idleTime = 0;
 	private double simulationTime = 0;
-	private String event ="";
+	private String eventName ="";
 	private String carId = "-";
 	private double previousEventTime = 0;
 	
@@ -117,8 +116,8 @@ public class CWState extends SimState {
 		return expoRandom.next();
 	}
 	
-	public String getEvent(){
-		return event;
+	public String getEventName(){
+		return eventName;
 	}
 	
 	public double getTime(){
@@ -174,19 +173,19 @@ public class CWState extends SimState {
 		carId = "" + x;
 	}
 	
-	public void setEvent(int x){
+	public void setEventName(int x){
 
 		if(x == 1){
-			event = "Arrive";
+			eventName = "Arrive";
 		}
 		else if (x == 2){
-			event = "Leave";
+			eventName = "Leave";
 		}
 		else if(x == 0){
-			event = "Start";
+			eventName = "Start";
 		}
 		else{
-			event = "Stop";
+			eventName = "Stop";
 			carId = "-";
 		}
 		setChanged();

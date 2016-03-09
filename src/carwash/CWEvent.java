@@ -48,7 +48,7 @@ public class CWEvent implements SimEvent {
 	private void start(){
 		idle();
 		action = START;
-		state.setEvent(action);//Uppdaterar i carwashview
+		state.setEventName(action);//Uppdaterar i carwashview
 		removing = true;
 	}
 	
@@ -57,7 +57,7 @@ public class CWEvent implements SimEvent {
 		state.setQueueTime(state.getMaxTime());
 		action = STOP;
 		state.setSimulationTime(state.getMaxTime());
-		state.setEvent(action);
+		state.setEventName(action);
 		stopping = true;
 	}
 	
@@ -68,7 +68,7 @@ public class CWEvent implements SimEvent {
 		if(state.getFastWashers() > 0){
 			state.setSimulationTime(time);
 			state.setCarId(carId);
-			state.setEvent(action);
+			state.setEventName(action);
 			state.changeFastWashers(-1);
 			time += state.getFastRandom();
 			saveLeaveTime[0] = time;
@@ -81,7 +81,7 @@ public class CWEvent implements SimEvent {
 		else if(state.getSlowWashers() > 0){
 			state.setSimulationTime(time);
 			state.setCarId(carId);
-			state.setEvent(action);
+			state.setEventName(action);
 			state.changeSlowWashers(-1);
 			time += state.getSlowRandom();
 			saveLeaveTime[0] = time;
@@ -96,7 +96,7 @@ public class CWEvent implements SimEvent {
 			double wash = state.carWashQueue.get(0)[1]; //spara tv�tten
 			state.setSimulationTime(time);
 			state.setCarId(carId);
-			state.setEvent(action); //S�tter event arrival (Updaterar observer i view)
+			state.setEventName(action); //S�tter event arrival (Updaterar observer i view)
 			
 			if(wash == 1){
 				time += state.getFastRandom();	//tiden f�r att tv�ttas l�ggs till
@@ -129,7 +129,7 @@ public class CWEvent implements SimEvent {
 		else{
 			state.setSimulationTime(time);
 			state.setCarId(carId);
-			state.setEvent(action);
+			state.setEventName(action);
 			
 			state.setRejected(1);
 			removing = true;
@@ -148,7 +148,7 @@ public class CWEvent implements SimEvent {
 		state.setQueueTime(time);
 		state.setCarId(carId);
 		state.setSimulationTime(time);
-		state.setEvent(action);
+		state.setEventName(action);
 		
 		if(state.getQueueSize() == 0){ //Tar bort den senaste k�andes tid och tv�tt om k�n �r tom
 			while(state.carWashQueue.size() > 0){
@@ -179,10 +179,7 @@ public class CWEvent implements SimEvent {
 		return time;
 	}
 	
-	public int getAction(){
-		return action;
-	}
-	
+
 	public boolean getSTOP(){
 		return stopping;
 	}
