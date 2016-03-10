@@ -13,7 +13,7 @@ public class EventQueue {
 	}
 	
 	public void loop(){
-		eventList = state.addInSequence(eventList);
+		eventList = state.addNextEvent(eventList);
 		sort();
 		eventList.get(0).execute();
 		shift();

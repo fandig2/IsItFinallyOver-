@@ -1,5 +1,5 @@
 /**
- * the package carwash holds all classes that are specific for the carwash machine.
+ * The package carwash holds all classes that are specific for the carwash machine.
  */
 
 package carwash;
@@ -44,7 +44,8 @@ public class CWEvent implements SimEvent {
 	}
 
 	/**
-	 * Execute checks state and then executes the proper event
+	 * Execute checks state and then executes the proper event.
+	 * All state changes cascades from this event.
 	 */
 
 
@@ -81,11 +82,6 @@ public class CWEvent implements SimEvent {
 		stopping = true;
 	}
 
-	/**
-	 * Arrival checks what washing machine can be used at current event and
-	 * whether a car needs to be placed in queue due to lack of available
-	 * washing machines.
-	 */
 
 	private void arrivalEvent(){
 		double[] saveLeaveTime = new double[2];
@@ -133,10 +129,9 @@ public class CWEvent implements SimEvent {
             saveLeaveTime[0] = time;
             saveLeaveTime[1] = 1;
             state.carWashQueue.add(saveLeaveTime);
-        }
-        else if(wash == 2){
+        } else if(wash == 2){
             time += state.getSlowRandom();
-            time += (state.carWashQueue.get(0)[0] - t); // v�ntetiden f�r n�sta maskin l�ggs till
+            time += (state.carWashQueue.get(0)[0] - t);
 
             state.carWashQueue.remove(0);
             saveLeaveTime[0] = time;

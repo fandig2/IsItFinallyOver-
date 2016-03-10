@@ -1,3 +1,7 @@
+/**
+ * The package carwash holds all classes that are specific for the carwash machine.
+ */
+
 package carwash;
 
 import java.util.ArrayList;
@@ -6,6 +10,10 @@ import random.ExponentialRandomStream;
 import random.UniformRandomStream;
 import sim.SimEvent;
 import sim.SimState;
+
+/**
+ * CWState holds and keeps track of the state in the carwash.
+ */
 
 public class CWState extends SimState {
 	
@@ -40,7 +48,20 @@ public class CWState extends SimState {
     private double lambda = 1.5;
     private double maxSimTime = 15;
 
-    public CWState(long seed,
+	/**
+	 * The CWState constructor takes params for changing simulation
+	 * @param seed
+	 * @param lowerFast
+	 * @param upperFast
+	 * @param lowerSlow
+	 * @param upperSlow
+	 * @param fastWashers
+	 * @param slowWashers
+	 * @param maxQueue
+	 * @param lambda
+	 * @param maxSimTime
+	 */
+	public CWState(long seed,
                    double lowerFast,
                    double upperFast,
                    double lowerSlow,
@@ -67,8 +88,29 @@ public class CWState extends SimState {
         this.expoRandom = new ExponentialRandomStream(lambda,seed);
     }
 
+
+	/**
+	 * sortCarWasQueue sorts the queue of cars waiting to be washed in time order
+	 */
 	public void sortCarWashQueue(){
 		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
+	}
+
+	/**
+	 * addNextEvent takes a list of Events from the EventQueue as an argument,
+	 * requests a new event from CWEvent,
+	 * appends it to the list and returns the new list.
+	 *
+	 * @param carWashEventList
+	 * @return carWashEventList
+	 */
+	@Override
+	public ArrayList<SimEvent> addNextEvent(ArrayList<SimEvent> carWashEventList){
+		double time = this.getPreviousEventTime() + this.getExpoRandom();
+		CWEvent e = new CWEvent(time, carCounter, this);
+		carWashEventList.add(e);
+		carCounter++;
+		return carWashEventList;
 	}
 
 	public double getMaxTime(){
@@ -78,75 +120,75 @@ public class CWState extends SimState {
 	public double getIdleTime(){
 		return idleTime;
 	}
-	
+
 	public int getFastWashers(){
 		return fastWashers;
 	}
-	
+
 	public int getSlowWashers(){
 		return slowWashers;
 	}
-	
+
 	public double getLowerFast(){
 		return lowerFast;
 	}
-	
+
 	public double getUpperFast(){
 		return upperFast;
 	}
-	
+
 	public double getLowerSlow(){
 		return lowerSlow;
 	}
-	
+
 	public double getUpperSlow(){
 		return upperSlow;
 	}
-	
+
 	public double getLambda(){
-		return lambda;		
+		return lambda;
 	}
-	
+
 	public long getSeed(){
 		return seed;
 	}
-	
+
 	public int getMaxQueueSize(){
 		return maxQueue;
 	}
-	
+
 	public double getQueueTime(){
 		return queueTime;
 	}
-	
+
 	public int getRejectedCars(){
 		return rejectedCars;
 	}
-	
+
 	public double getFastRandom(){
 		return fastRandom.next();
 	}
-	
+
 	public double getSlowRandom(){
 		return  slowRandom.next();
 	}
-	
+
 	public double getExpoRandom(){
 		return expoRandom.next();
 	}
-	
+
 	public String getEventName(){
 		return eventName;
 	}
-	
+
 	public double getTime(){
 		return simulationTime;
 	}
-	
+
+
 	public String getCarId(){
 		return carId;
 	}
-
 
 	public double getMeanQueue(){
 		//TODO divide by the number of cars that actually get washed during simulation time (19 in current testcase)
@@ -158,31 +200,31 @@ public class CWState extends SimState {
 
 		return getQueueTime()/NUMBER_OF_CARS_ARRIVED ;
 	}
-	
+
 	public int getQueueSize(){
 		return queueSize;
 	}
-	
+
 	public double getPreviousEventTime(){
 		return previousEventTime;
 	}
-	
+
 	public void setPreviousEventTime(double x){
 		previousEventTime = x;
 	}
-	
+
 	public void setRejected(int x){
 		rejectedCars += x;
 	}
-	
+
 	public void setIdle(double x){
 		idleTime += x;
 	}
-	
+
 	public void setQueueSize(int x){
 		queueSize += x;
 	}
-	
+
 	public void setQueueTime(double time){ //R�knar ut queueTime
 
 		if(lastQueueTime == 0){
@@ -193,11 +235,11 @@ public class CWState extends SimState {
 			lastQueueTime = time;
 		}
 	}
-	
+
 	public void setCarId(int x){
 		carId = "" + x;
 	}
-	
+
 	public void setEventName(int x){
 
 		if(x == 1){
@@ -216,29 +258,21 @@ public class CWState extends SimState {
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void setSimulationTime(double x){
 		simulationTime = x;
 	}
-	
+
 	public void changeFastWashers(double x){
 
 		fastWashers += x;
 	}
-	
 	public void changeSlowWashers(double x){
 
 		slowWashers += x;
 	}
-	private int counter = 0;
 
-	@Override
-	public ArrayList<SimEvent> addInSequence(ArrayList<SimEvent> carWashEventList){
-		double time = this.getPreviousEventTime()+this.getExpoRandom();
-		CWEvent e = new CWEvent(time, counter, this);
-		carWashEventList.add(e);
-		counter++;
-		return carWashEventList;
-	}
+
+	private int carCounter = 0;
 
 }
