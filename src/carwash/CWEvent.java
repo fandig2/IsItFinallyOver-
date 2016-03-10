@@ -13,6 +13,7 @@ public class CWEvent implements SimEvent {
 	private int STOP = 3;
 
 	CWState state;
+	CWQueue queue;
 	private double time = 0;
 	private int carId = 0;
 	private int action = ARRIVE;
@@ -31,11 +32,12 @@ public class CWEvent implements SimEvent {
 	 * @param state the car wash state
 	 */
 
-	public CWEvent(double time, int carId, CWState state){
+	public CWEvent(double time, int carId, CWState state, CWQueue queue){
 		this.time = time;
 		state.setPreviousEventTime(time);
 		this.state = state;
 		this.carId = carId;
+		this.queue = queue;
 	}
 
 	/**
@@ -97,7 +99,7 @@ public class CWEvent implements SimEvent {
 			rejectCar();
 		}
 
-		state.sortCarWashQueue();
+		queue.sortCarWashQueue();
 	}
 
 	private void rejectCar() {
@@ -111,27 +113,27 @@ public class CWEvent implements SimEvent {
 
 	private void enterCarWashQueue(double[] saveLeaveTime) {
 		double t = time; //Spara ARRIVE tiden
-		double wash = state.carWashQueue.get(0)[1];
+		double wash = queue.carWashQueue.get(0)[1];
 		state.setSimulationTime(time);
 		state.setCarId(carId);
 		state.setEventName(action);
 
 		if(wash == 1){
             time += state.getFastRandom();
-            time += (state.carWashQueue.get(0)[0] - t);
+            time += (queue.carWashQueue.get(0)[0] - t);
 
-            state.carWashQueue.remove(0);
+            queue.carWashQueue.remove(0);
             saveLeaveTime[0] = time;
             saveLeaveTime[1] = 1;
-            state.carWashQueue.add(saveLeaveTime);
+            queue.carWashQueue.add(saveLeaveTime);
         } else if(wash == 2){
             time += state.getSlowRandom();
-            time += (state.carWashQueue.get(0)[0] - t);
+            time += (queue.carWashQueue.get(0)[0] - t);
 
-            state.carWashQueue.remove(0);
+            queue.carWashQueue.remove(0);
             saveLeaveTime[0] = time;
             saveLeaveTime[1] = 2;
-            state.carWashQueue.add(saveLeaveTime);
+            queue.carWashQueue.add(saveLeaveTime);
         }
 		state.setQueueSize(1);
 		action = LEAVE;
@@ -152,7 +154,7 @@ public class CWEvent implements SimEvent {
 		time += state.getSlowRandom();
 		saveLeaveTime[0] = time;
 		saveLeaveTime[1] = 2;
-		state.carWashQueue.add(saveLeaveTime);
+		queue.carWashQueue.add(saveLeaveTime);
 		action = LEAVE;
 		slow = true;
 	}
@@ -165,7 +167,7 @@ public class CWEvent implements SimEvent {
 		time += state.getFastRandom();
 		saveLeaveTime[0] = time;
 		saveLeaveTime[1] = 1;
-		state.carWashQueue.add(saveLeaveTime);
+		queue.carWashQueue.add(saveLeaveTime);
 		action = LEAVE;
 		fast = true;
 	}
@@ -184,8 +186,8 @@ public class CWEvent implements SimEvent {
 		state.setEventName(action);
 
 		if(state.getQueueSize() == 0){
-			while(state.carWashQueue.size() > 0){
-				state.carWashQueue.remove(0);
+			while(queue.carWashQueue.size() > 0){
+				queue.carWashQueue.remove(0);
 			}
 		}
 

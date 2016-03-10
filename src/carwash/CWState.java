@@ -25,7 +25,7 @@ public class CWState extends SimState {
 	private double queueTime = 0;
 	private double lastQueueTime = 0;
 	
-	public ArrayList<double[]> carWashQueue = new ArrayList<>();
+//	public ArrayList<double[]> carWashQueue = new ArrayList<>();
 	
 	private long seed;
 	private double lowerFast;
@@ -43,6 +43,8 @@ public class CWState extends SimState {
 
     private double lambda = 1.5;
     private double maxSimTime = 15;
+    
+    CWQueue CWQueue;
 
 	/**
 	 * The CWState constructor takes params for changing simulation
@@ -67,7 +69,8 @@ public class CWState extends SimState {
                    int slowWashers,
                    int maxQueue,
                    double lambda,
-                   double maxSimTime) {
+                   double maxSimTime,
+                   CWQueue carQueue) {
 
         this.seed = seed;
         this.lowerFast = lowerFast;
@@ -83,15 +86,16 @@ public class CWState extends SimState {
         this.fastRandom = new UniformRandomStream(lowerFast, upperFast, seed);
         this.slowRandom = new UniformRandomStream(lowerSlow,upperSlow,seed);
         this.expoRandom = new ExponentialRandomStream(lambda,seed);
+        this.CWQueue = carQueue;
     }
 
 
 	/**
 	 * sortCarWasQueue sorts the queue of cars waiting to be washed in time order
 	 */
-	public void sortCarWashQueue(){
-		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
-	}
+//	public void sortCarWashQueue(){
+//		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
+//	}
 
 	/**
 	 * addNextEvent takes a list of Events from the EventQueue as an argument,
@@ -104,7 +108,7 @@ public class CWState extends SimState {
 	@Override
 	public ArrayList<SimEvent> addNextEvent(ArrayList<SimEvent> simEvents){
 		double time = this.getPreviousEventTime() + this.getExpoRandom();
-		CWEvent e = new CWEvent(time, carCounter, this);
+		CWEvent e = new CWEvent(time, carCounter, this, CWQueue);
 		simEvents.add(e);
 		carCounter++;
 		return simEvents;
