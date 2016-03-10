@@ -98,16 +98,16 @@ public class CWState extends SimState {
 	 * requests a new event from CWEvent,
 	 * appends it to the list and returns the new list.
 	 *
-	 * @param carWashEventList list from EventQueue
+	 * @param simEvents list from EventQueue
 	 * @return carWashEventList list to EventQueue
 	 */
 	@Override
-	public ArrayList<SimEvent> addNextEvent(ArrayList<SimEvent> carWashEventList){
+	public ArrayList<SimEvent> addNextEvent(ArrayList<SimEvent> simEvents){
 		double time = this.getPreviousEventTime() + this.getExpoRandom();
 		CWEvent e = new CWEvent(time, carCounter, this);
-		carWashEventList.add(e);
+		simEvents.add(e);
 		carCounter++;
-		return carWashEventList;
+		return simEvents;
 	}
 
 	public double getMaxTime(){
