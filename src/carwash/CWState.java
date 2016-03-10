@@ -222,7 +222,7 @@ public class CWState extends SimState {
 		queueSize += x;
 	}
 
-	public void setQueueTime(double time){ //R�knar ut queueTime
+	public void calcQueueTime(double time){
 
 		if(lastQueueTime == 0){
 			lastQueueTime = time;

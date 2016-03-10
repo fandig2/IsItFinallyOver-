@@ -70,7 +70,7 @@ public class CWEvent implements SimEvent {
 
 	private void stopEvent(){
 		calcIdle();
-		state.setQueueTime(state.getMaxTime());
+		state.calcQueueTime(state.getMaxTime());
 		action = STOP;
 		state.setSimulationTime(state.getMaxTime());
 		state.setEventName(action);
@@ -81,7 +81,7 @@ public class CWEvent implements SimEvent {
 	private void arrivalEvent(){
 		double[] saveLeaveTime = new double[2];
 		calcIdle();
-		state.setQueueTime(time);
+		state.calcQueueTime(time);
 
 		if(state.getFastWashers() > 0){
 			enterFastWash(saveLeaveTime);
@@ -178,12 +178,12 @@ public class CWEvent implements SimEvent {
 
 	private void leaveEvent(){
 		calcIdle();
-		state.setQueueTime(time);
+		state.calcQueueTime(time);
 		state.setCarId(carId);
 		state.setSimulationTime(time);
 		state.setEventName(action);
 
-		if(state.getQueueSize() == 0){ //Tar bort den senaste k�andes tid och tv�tt om k�n �r tom
+		if(state.getQueueSize() == 0){ //Tar bort den senaste kandes tid och tv�tt om k�n �r tom
 			while(state.carWashQueue.size() > 0){
 				state.carWashQueue.remove(0);
 			}
