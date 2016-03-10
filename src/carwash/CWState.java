@@ -1,7 +1,3 @@
-/**
- * The package carwash holds all classes that are specific for the carwash machine.
- */
-
 package carwash;
 
 import java.util.ArrayList;
@@ -50,17 +46,18 @@ public class CWState extends SimState {
 
 	/**
 	 * The CWState constructor takes params for changing simulation
-	 * @param seed
-	 * @param lowerFast
-	 * @param upperFast
-	 * @param lowerSlow
-	 * @param upperSlow
-	 * @param fastWashers
-	 * @param slowWashers
-	 * @param maxQueue
-	 * @param lambda
-	 * @param maxSimTime
+	 * @param seed seed for RNG
+	 * @param lowerFast distribution bound for RNG
+	 * @param upperFast distribution bound for RNG
+	 * @param lowerSlow distribution bound for RNG
+	 * @param upperSlow distribution bound for RNG
+	 * @param fastWashers number of fast washers
+	 * @param slowWashers number of slow washers
+	 * @param maxQueue max number of cars in queue to wash
+	 * @param lambda lambda for RNG
+	 * @param maxSimTime time for stop event
 	 */
+
 	public CWState(long seed,
                    double lowerFast,
                    double upperFast,
@@ -101,8 +98,8 @@ public class CWState extends SimState {
 	 * requests a new event from CWEvent,
 	 * appends it to the list and returns the new list.
 	 *
-	 * @param carWashEventList
-	 * @return carWashEventList
+	 * @param carWashEventList list from EventQueue
+	 * @return carWashEventList list to EventQueue
 	 */
 	@Override
 	public ArrayList<SimEvent> addNextEvent(ArrayList<SimEvent> carWashEventList){

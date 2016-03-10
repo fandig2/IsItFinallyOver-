@@ -6,15 +6,34 @@ import sim.SimView;
 
 import java.util.Observable;
 
+/**
+ * CWView is a command line view for the Car Wash in CWState.
+ * It extends SimView which in turn implements Observer,
+ * and it Observes CWState.
+ */
 public class CWView extends SimView {
+
     CWState CWState;
 
     private static String dashedLine = String.format("%-32s %n", "-------------------------------------------");
 
+    /**
+     * Takes a CWState as a parameter so it can use .get() methods to
+     * reflect the changing state.
+     * @param carWashState the state
+     */
     public CWView(SimState carWashState){
         this.CWState = (CWState) carWashState;
         }
 
+
+    /**
+     * The core of Observer/Observable.
+     * Prints current state on state change, and when the simulation ends
+     * it prints a final footer with a summary of the data from the simulation.
+     * @param arg0 Observable
+     * @param arg1 Observer
+     */
     @Override
     public void update(Observable arg0, Object arg1) {
         if(this.CWState.getTime() == this.CWState.getMaxTime()){
@@ -25,6 +44,11 @@ public class CWView extends SimView {
             printCurrentState();
         }
     }
+
+
+    /**
+     * Prints the current state.
+     */
     public void printCurrentState(){
         String currentTime = String.format("%2.2f \t %3s", this.CWState.getTime(), " ");
         String fastMachinesFree = String.format("%-12s", this.CWState.getFastWashers(), "");
@@ -38,6 +62,9 @@ public class CWView extends SimView {
         System.out.println(currentTime+ fastMachinesFree+ slowMachinesFree+ carID+ event+ idleTime+ queueTime+ queueSize+ rejected);
     }
 
+    /**
+     * Prints introductory parameters for the simulation.
+     */
     public void printHeader()
     {
         String seedString = String.format("%-8s %d%n", "Seed =", this.CWState.getSeed());
@@ -75,6 +102,9 @@ public class CWView extends SimView {
     }
 
 
+    /**
+     * Prints a summary of the simulation data.
+     */
     public void printFooter(){
         String totalIdleTime = String.format("%-32s %2.2f %n", "Total idle machine time: ", CWState.getIdleTime() );
         String totalQueueingTime = String.format("%-32s %2.2f %n", "Total queueing time: ", CWState.getQueueTime());

@@ -1,14 +1,9 @@
-/**
- * The package carwash holds all classes that are specific for the carwash machine.
- */
-
 package carwash;
-
 
 import sim.SimEvent;
 
 /**
- * CWEvent creates the different events that can occur.
+ * CWEvent creates the different events that can occur in our Car Wash.
  */
 
 public class CWEvent implements SimEvent {
@@ -31,9 +26,9 @@ public class CWEvent implements SimEvent {
 
 	/**
 	 * the constructor CWEvent initializes time, carID and state.
-	 * @param time
-	 * @param carId
-	 * @param state
+	 * @param time event time
+	 * @param carId car id
+	 * @param state the car wash state
 	 */
 
 	public CWEvent(double time, int carId, CWState state){
