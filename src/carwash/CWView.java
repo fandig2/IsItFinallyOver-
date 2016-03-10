@@ -32,7 +32,7 @@ public class CWView extends SimView {
      * Prints current state on state change, and when the simulation ends
      * it prints a final footer with a summary of the data from the simulation.
      * @param arg0 Observable
-     * @param arg1 Observer
+     * @param arg1 Object
      */
     @Override
     public void update(Observable arg0, Object arg1) {
@@ -65,7 +65,7 @@ public class CWView extends SimView {
     /**
      * Prints introductory parameters for the simulation.
      */
-    public void printHeader()
+    public void outputSimParams()
     {
         String seedString = String.format("%-8s %d%n", "Seed =", this.CWState.getSeed());
         String fastMachinesString = String.format("%-12s %d %n", "Fast machines:", this.CWState.getFastWashers());

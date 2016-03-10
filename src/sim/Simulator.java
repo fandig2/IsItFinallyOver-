@@ -26,7 +26,7 @@ public class Simulator {
 
 	private void setUp() {
 		this.simState.addObserver(this.simView);
-		this.simView.printHeader();
+		this.simView.outputSimParams();
 	}
 
 	/**
