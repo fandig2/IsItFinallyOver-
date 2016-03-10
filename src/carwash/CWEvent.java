@@ -111,13 +111,13 @@ public class CWEvent implements SimEvent {
 
 	private void enterCarWashQueue(double[] saveLeaveTime) {
 		double t = time; //Spara ARRIVE tiden
-		double wash = state.carWashQueue.get(0)[1]; //spara tv�tten
+		double wash = state.carWashQueue.get(0)[1];
 		state.setSimulationTime(time);
 		state.setCarId(carId);
-		state.setEventName(action); //S�tter event arrival (Updaterar observer i view)
+		state.setEventName(action);
 
 		if(wash == 1){
-            time += state.getFastRandom();	//tiden f�r att tv�ttas l�ggs till
+            time += state.getFastRandom();
             time += (state.carWashQueue.get(0)[0] - t);
 
             state.carWashQueue.remove(0);
@@ -183,25 +183,25 @@ public class CWEvent implements SimEvent {
 		state.setSimulationTime(time);
 		state.setEventName(action);
 
-		if(state.getQueueSize() == 0){ //Tar bort den senaste kandes tid och tv�tt om k�n �r tom
+		if(state.getQueueSize() == 0){
 			while(state.carWashQueue.size() > 0){
 				state.carWashQueue.remove(0);
 			}
 		}
 
 		if(fast){
-			if(state.getQueueSize() == 0){ 	//Om k�n till tv�tten �r tom s� blir tv�ttmaskinen ledig
+			if(state.getQueueSize() == 0){
 				state.changeFastWashers(1);
 			}
-			else{						//Annars s� minskas k�n med 1;
+			else{
 				state.setQueueSize(-1);
 			}
 		}
 		else if (slow){
-			if(state.getQueueSize() == 0){	//Om k�n till tv�tten �r tom s� blir tv�ttmaskinen ledig
+			if(state.getQueueSize() == 0){
 				state.changeSlowWashers(1);
 			}
-			else{						//Annars s� minskas k�n med 1;
+			else{
 				state.setQueueSize(-1);
 			}
 		}
