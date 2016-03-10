@@ -67,7 +67,7 @@ public class CWState extends SimState {
         this.expoRandom = new ExponentialRandomStream(lambda,seed);
     }
 
-	public void sort(){ //Kr�vs ifall en carId I k�n avslutas f�re ett carId tidigare i k�n. �ndrar positionen s� den blir korrekt
+	public void sortCarWashQueue(){
 		carWashQueue.sort((e1, e2) -> Double.compare(e1[0], e2[0]));	
 	}
 
@@ -152,8 +152,11 @@ public class CWState extends SimState {
 		//TODO divide by the number of cars that actually get washed during simulation time (19 in current testcase)
 
         // Test case on page 5 in lab spec -> does not work
+		// Works for testcase 1 if w
 
-		return getQueueTime()/19; //Var i helvete kommer 19 ifr�n? Har h�kan gjort fel?
+		final int NUMBER_OF_CARS_ARRIVED = 19;
+
+		return getQueueTime()/NUMBER_OF_CARS_ARRIVED ;
 	}
 	
 	public int getQueueSize(){
