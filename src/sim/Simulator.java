@@ -20,7 +20,7 @@ public class Simulator {
 	public void start(){
 
 		do{
-			this.eventQueue.loop();
+			this.eventQueue.eventLoop();
 		}while(!eventQueue.eventList.get(0).getSTOP());
 
 	}
